@@ -1,5 +1,5 @@
-const API_URL =
-  'https://script.google.com/macros/s/AKfycbwfVT0p_XczzsvyLp_DMptYLc7JKZCG32oNGeN-ZTxsJYp_MimWOLLOm64entDekxwWPw/exec';
+const API_URL = process.env.EXPO_PUBLIC_API_URL || 
+  'https://script.google.com/macros/s/SUA_URL_AQUI/exec';
 
 export type Categoria = {
   id: number;
@@ -269,12 +269,12 @@ export async function devolverItensAoEstoque(dados: {
 
   try {
     const results = await Promise.all(promises);
-    const allSuccess = results.every(r => r.success);
+    const allSuccess = results.every((r: any) => r.success);
     
     if (allSuccess) {
       return { success: true, movimentacoes: results };
     } else {
-      const errors = results.filter(r => !r.success).map(r => r.error).join(', ');
+      const errors = results.filter((r: any) => !r.success).map((r: any) => r.error).join(', ');
       return { success: false, error: `Erro em algumas devoluções: ${errors}` };
     }
   } catch {
